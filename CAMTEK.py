@@ -193,7 +193,7 @@ class AVICsvForEDA_Camtek :
         sftpPath = []
         delPath = []
 
-        for root, dir_list, file_list in os.walk('.'):
+        for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
 
             if(len(dir_list) == 0):
                 root = root.replace("\\", "/")
