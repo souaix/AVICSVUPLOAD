@@ -191,8 +191,9 @@ class AVICsvForEDA_Topcon:
 
         sftpPath = []
         delPath = []
+        delPass = 1 # 1=CAN DEL ; 0=CANNOT DEL
 
-        for root, dir_list, file_list in os.walk('.'):
+        for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
 
             if(len(dir_list) == 0):
                 root = root.replace("\\", "/")
@@ -210,9 +211,12 @@ class AVICsvForEDA_Topcon:
 
                                     logging.info("上傳檔案:"+p+"/"+f)
                                     SFT.sftp_upload(self.SFTPip, p, p+"/"+f)
+                                    os.remove(p+"/"+f)
+
 
                 except Exception as E:
                     logging.debug("上傳檔案失敗 : " + str(E))
+                    delPass=0
                     # print("上傳檔案失敗 : " + str(E))
 
                 logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
@@ -231,6 +235,17 @@ class AVICsvForEDA_Topcon:
 
                 logging.info("---DELETE LOCAL FILES---")
 
+        try:
+            if delPass==1:
+                shutil.rmtree('/home/cim/MAP/AVICSVUPLOAD/RW')
+            else:
+                logging.info("有檔案未上傳成功，禁止刪除資料夾")
+
+        except Exception AS D:
+            logging.info("刪除資料夾失敗 : "+str(D))
+
+
+                '''
                 for p in sftpPath:
                     # 檔案上傳完成後，即刪除本機檔案
                     rmdir = p.split("/")
@@ -238,6 +253,7 @@ class AVICsvForEDA_Topcon:
                     for r in rmdir:
                         delPath.append(r)
                         #shutil.rmtree(r)
+                
 
         delPath = list(set(delPath))
         
@@ -249,3 +265,4 @@ class AVICsvForEDA_Topcon:
                 logging.info("刪除資料夾失敗 : " + str(d))
                 # print("刪除資料夾失敗 : " + str(R))
                              
+        '''
