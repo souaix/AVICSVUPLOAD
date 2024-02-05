@@ -206,24 +206,34 @@ class AVICsvForEDA_Topcon:
 
                 logging.info("---START UPLOAD---")
                 
-                try:
+                try:                    
                     for p in sftpPath:
+                        i=0                        
                         for root, dir_list, file_list in os.walk(p):
-                            print("p in sftpPath:")
-                            print(p)
-                            print("file_list:")
-                            print(file_list)
-                            print("------------------------------")
-                            for f in file_list:
-                                print("f in file_list:")
-                                print(f)
+                            if i == 1 :
+                                break
+                            else:
+
+                                print(root)
+                                print(dir_list)
+                                print(file_list)
+                                print("===================")
+                                print("p in  sftpPath:")
+                                print(p)
+                                print("file_list:")
+                                print(file_list)
                                 print("------------------------------")
-                                #                                 print(p+"/"+f)
+                                for f in file_list:
+                                    print("f in file_list:")
+                                    print(f)
+                                    print("------------------------------")
+                                    #                                 print(p+"/"+f)
 
-                                logging.info("上傳檔案:"+p+"/"+f)
-                                SFT.sftp_upload(self.SFTPip, p, p+"/"+f)
-                                os.remove(p+"/"+f)
+                                    logging.info("上傳檔案:"+p+"/"+f)
+                                    SFT.sftp_upload(self.SFTPip, p, p+"/"+f)
+                                    os.remove(p+"/"+f)
 
+                                i=1
 
                 except Exception as E:
                     logging.debug("上傳檔案失敗 : " + str(E))
