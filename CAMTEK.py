@@ -216,7 +216,7 @@ class AVICsvForEDA_Camtek :
         try:                    
             for p in range(0,len(sftpPath)):
 
-                logging.info("開始上傳 : "sftpPath[p])
+                logging.info("開始上傳 : "+sftpPath[p])
                 
                 SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
                 os.remove("/home/cim/MAP/AVICSVUPLOAD"+sftpPath[p])

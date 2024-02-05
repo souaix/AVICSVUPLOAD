@@ -203,7 +203,6 @@ class AVICsvForEDA_Topcon:
             root = "/".join(root[5:])
                 
             root = root.replace("\\", "/")
-            root = root.replace("./", "")
 
             for f in file_list:
                 rootPath.append(root)                
@@ -215,14 +214,14 @@ class AVICsvForEDA_Topcon:
         try:                    
             for p in range(0,len(sftpPath)):
 
-                logging.info("開始上傳 : "sftpPath[p])
+                logging.info("開始上傳 : "+sftpPath[p])
                 
                 SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
-                os.remove("/home/cim/MAP/AVICSVUPLOAD"+sftpPath[p])
+                os.remove("/home/cim/MAP/AVICSVUPLOAD/"+sftpPath[p])
 
 
         except Exception as E:
-            logging.debug("上傳檔案失敗 : " + str(E))
+            logging.info("上傳檔案失敗 : " + str(E))
             delPass=0
             # print("上傳檔案失敗 : " + str(E))
 
