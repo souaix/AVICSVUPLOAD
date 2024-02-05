@@ -190,51 +190,58 @@ class AVICsvForEDA_Camtek :
 
     def uploadfile(self):
 
-        sftpPath = []
+        #提供sftp_upload使用
+        sftpPath = []       #上傳完整路徑
+        rootPath=[]         #上傳目錄路徑
+
         delPath = []
-        delPass=1
+        delPass = 1 # 1=CAN DEL ; 0=CANNOT DEL
 
         for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
-
-            if(len(dir_list) == 0):
-                root = root.replace("\\", "/")
-                root = root.replace("./", "")
-                sftpPath.append(root)
-
-                logging.info("---START UPLOAD---")
+            
+            #因排程會把/home/cim/MAP/AVICSVUPLOAD吃進去，故要排除
+            root = root.split("/")
+            root = "/".join(root[5:])
                 
-                try:
-                    for p in sftpPath:
-                        if p != '.ipynb_checkpoints' and p != '__pycache__':
-                            for root, dir_list, file_list in os.walk(p):
-                                for f in file_list:
-                                    #                                 print(p+"/"+f)
+            root = root.replace("\\", "/")
+            root = root.replace("./", "")
 
-                                    logging.info("上傳檔案:"+p+"/"+f)
-                                    SFT.sftp_upload(self.SFTPip, p, p+"/"+f)
-                                    os.remove(p+"/"+f)
+            for f in file_list:
+                rootPath.append(root)                
+                sftpPath.append(root+"/"+f)
 
-                except Exception as E:
-                    logging.debug("上傳檔案失敗 : " + str(E))
-                    delPass=0
-                    # print("上傳檔案失敗 : " + str(E))
+        logging.info("---START UPLOAD---")
 
-                logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
+            
+        try:                    
+            for p in range(0,len(sftpPath)):
 
-                try:
-                    if(self.UPDATELastModify != ''):
-                        sql = "REPLACE INTO log(eqpid,lastdatetime) values ('" + \
-                            self.SavePathLv4+"','" + \
-                            str(self.UPDATELastModify)+"')"                        
+                logging.info("開始上傳 : "sftpPath[p])
+                
+                SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
+                os.remove("/home/cim/MAP/AVICSVUPLOAD"+sftpPath[p])
 
-                        con_cim.execute(sql)
 
-                except Exception as I:
-                    logging.info("INSERT LOG失敗 : " + str(I))
-                    # print("INSERT LOG失敗 : " + str(I))
+        except Exception as E:
+            logging.debug("上傳檔案失敗 : " + str(E))
+            delPass=0
+            # print("上傳檔案失敗 : " + str(E))
+
+        logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
+
+        try:
+            if(self.UPDATELastModify != ''):
+                sql = "REPLACE INTO log(eqpid,lastdatetime) values ('" + \
+                    self.SavePathLv4+"','" + \
+                    str(self.UPDATELastModify)+"')"                        
+
+                con_cim.execute(sql)
+
+        except Exception as I:
+            logging.info("INSERT LOG失敗 : " + str(I))
+            # print("INSERT LOG失敗 : " + str(I))
 
         logging.info("---DELETE LOCAL FILES---")
-
 
         try:
             if delPass==1:
@@ -244,4 +251,3 @@ class AVICsvForEDA_Camtek :
 
         except Exception as D:
             logging.info("刪除資料夾失敗 : "+str(D))
-
