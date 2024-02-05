@@ -175,7 +175,7 @@ class AVICsvForEDA_Camtek :
                                                     PATH = self.SavePathLv1+"/"+self.SavePathLv2+"/"+self.SavePathLv3+"/"+self.SavePathLv4+"/"+self.SavePathLv5+"/"+self.SavePathLv6+"/"+self.SavePathLv7+"/"
                                                     if not os.path.isdir(PATH):
                                                         os.makedirs(PATH)
-            
+                                                    print(self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+dirname_subsub+"/"+filename)
                                                     downloadfile(ftp, self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+dirname_subsub+"/"+filename, PATH+filename)
 
                                         ftp.cwd('../')                                                          

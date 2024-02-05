@@ -199,19 +199,30 @@ class AVICsvForEDA_Topcon:
                 root = root.replace("\\", "/")
                 root = root.replace("./", "")
                 sftpPath.append(root)
+                
+                print("sftpPATH:")
+                print(sftpPath)
+                print("-------------------")
 
                 logging.info("---START UPLOAD---")
                 
                 try:
                     for p in sftpPath:
-                        if p != '.ipynb_checkpoints' and p != '__pycache__':
-                            for root, dir_list, file_list in os.walk(p):
-                                for f in file_list:
-                                    #                                 print(p+"/"+f)
+                        for root, dir_list, file_list in os.walk(p):
+                            print("p in sftpPath:")
+                            print(p)
+                            print("file_list:")
+                            print(file_list)
+                            print("------------------------------")
+                            for f in file_list:
+                                print("f in file_list:")
+                                print(f)
+                                print("------------------------------")
+                                #                                 print(p+"/"+f)
 
-                                    logging.info("上傳檔案:"+p+"/"+f)
-                                    SFT.sftp_upload(self.SFTPip, p, p+"/"+f)
-                                    os.remove(p+"/"+f)
+                                logging.info("上傳檔案:"+p+"/"+f)
+                                SFT.sftp_upload(self.SFTPip, p, p+"/"+f)
+                                os.remove(p+"/"+f)
 
 
                 except Exception as E:
