@@ -189,16 +189,16 @@ class AVICsvForEDA_Topcon:
 
     def uploadfile(self):
 
-        sftpPath = []
-
-        rootPath=[]
-        filePath=[]
+        #提供sftp_upload使用
+        sftpPath = []       #上傳完整路徑
+        rootPath=[]         #上傳目錄路徑
 
         delPath = []
         delPass = 1 # 1=CAN DEL ; 0=CANNOT DEL
 
         for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
-
+            
+            #因排程會把/home/cim/MAP/AVICSVUPLOAD吃進去，故要排除
             root = root.split("/")
             root = "/".join(root[5:])
                 
@@ -206,10 +206,8 @@ class AVICsvForEDA_Topcon:
             root = root.replace("./", "")
 
             for f in file_list:
-                rootPath.append(root)
-                filePath.append(f)
+                rootPath.append(root)                
                 sftpPath.append(root+"/"+f)
-
 
         logging.info("---START UPLOAD---")
 
@@ -217,10 +215,10 @@ class AVICsvForEDA_Topcon:
         try:                    
             for p in range(0,len(sftpPath)):
 
-                logging.info(sftpPath[p])
+                logging.info("開始上傳 : "sftpPath[p])
                 
                 SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
-                os.remove(sftpPath[p])
+                os.remove("/home/cim/MAP/AVICSVUPLOAD"+sftpPath[p])
 
 
         except Exception as E:
