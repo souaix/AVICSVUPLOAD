@@ -1,0 +1,37 @@
+[Wafer Information]
+Wafer Number,25
+Wafer ID,A10Q335961402.Chipping.0
+Job Name,X2L3QBJL_R_08_05
+Model Name,EagleT
+Lot Number,241000755-010
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1357.753,Y,2285.221
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/21/2024 04:30
+End Time,01/21/2024 04:31
+Inspection Time,0:01:08
+Photo Time,0:00:00
+Data Output Time,01/21/2024 04:38
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+25,A10Q335961402.Chipping.0,2647,2645,99.924443,2,2,2
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+30,27,50,2.866249,17.197494,17.197494,1
+84,19,50,28.66249,17.197494,146.178699,1
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+25,A10Q335961402.Chipping.0,2647,2645,99.924443,2,2,2
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+30,27,50,2.866249,17.197494,17.197494,1
+84,19,50,28.66249,17.197494,146.178699,1
+

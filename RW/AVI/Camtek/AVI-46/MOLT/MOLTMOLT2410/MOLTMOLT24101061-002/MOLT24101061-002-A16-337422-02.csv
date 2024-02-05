@@ -1,0 +1,35 @@
+[Wafer Information]
+Wafer Number,17
+Wafer ID,A16-Q337422-402
+Job Name,X2L3QBJL_R_08_QB1
+Model Name,EagleT
+Lot Number,MOLT24101061-002
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1345.33,Y,2274.899
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/21/2024 10:34
+End Time,01/21/2024 10:34
+Inspection Time,0:00:25
+Photo Time,0:00:07
+Data Output Time,01/21/2024 10:37
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F29 Silicon powder
+17,A16-Q337422-402,340,339,99.705882,1,1,1
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+88,31,50,106.678548,20.182428,619.88886,3
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F29 Silicon powder
+17,A16-Q337422-402,340,340,100,0,0,0
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+88,31,Pass,106.678548,20.182428,619.88886,3
+

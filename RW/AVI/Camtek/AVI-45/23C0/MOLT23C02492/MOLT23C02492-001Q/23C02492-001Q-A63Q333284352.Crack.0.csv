@@ -1,0 +1,33 @@
+[Wafer Information]
+Wafer Number,11
+Wafer ID,A63Q333284352.Crack.0
+Job Name,X2L3QBJL_R_08_05
+Model Name,EagleT
+Lot Number,23C02492-001Q
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1341.425,Y,2272.017
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/09/2024 01:21
+End Time,01/09/2024 01:21
+Inspection Time,0:00:05
+Photo Time,0:00:00
+Data Output Time,01/09/2024 02:11
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,
+11,A63Q333284352.Crack.0,9,9,100,0,0,
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,
+11,A63Q333284352.Crack.0,9,9,100,0,0,
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+

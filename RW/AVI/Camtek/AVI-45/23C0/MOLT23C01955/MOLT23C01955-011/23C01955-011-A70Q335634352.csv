@@ -1,0 +1,35 @@
+[Wafer Information]
+Wafer Number,25
+Wafer ID,A70-Q335634-352
+Job Name,X2L3QBJL_R_08_05
+Model Name,EagleT
+Lot Number,23C01955-011
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1345.33,Y,2274.899
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/02/2024 02:21
+End Time,01/02/2024 02:25
+Inspection Time,0:03:20
+Photo Time,0:00:00
+Data Output Time,01/02/2024 02:30
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+25,A70-Q335634-352,519,518,99.807322,1,1,1
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+56,4,50,273.90438,8.649612,813.063528,1
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+25,A70-Q335634-352,519,519,100,0,0,0
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+56,4,Pass,273.90438,8.649612,813.063528,1
+

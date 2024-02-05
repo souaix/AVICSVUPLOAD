@@ -192,6 +192,7 @@ class AVICsvForEDA_Camtek :
 
         sftpPath = []
         delPath = []
+        delPass=1
 
         for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
 
@@ -215,6 +216,7 @@ class AVICsvForEDA_Camtek :
 
                 except Exception as E:
                     logging.debug("上傳檔案失敗 : " + str(E))
+                    delPass=0
                     # print("上傳檔案失敗 : " + str(E))
 
                 logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
@@ -231,7 +233,7 @@ class AVICsvForEDA_Camtek :
                     logging.info("INSERT LOG失敗 : " + str(I))
                     # print("INSERT LOG失敗 : " + str(I))
 
-                logging.info("---DELETE LOCAL FILES---")
+        logging.info("---DELETE LOCAL FILES---")
 
 
         try:
@@ -240,29 +242,6 @@ class AVICsvForEDA_Camtek :
             else:
                 logging.info("有檔案未上傳成功，禁止刪除資料夾")
 
-        except Exception AS D:
+        except Exception as D:
             logging.info("刪除資料夾失敗 : "+str(D))
 
-
-                '''
-                for p in sftpPath:
-                    # 檔案上傳完成後，即刪除本機檔案
-                    rmdir = p.split("/")
-                    rmdir = rmdir[::-1]
-                    for r in rmdir:
-                        delPath.append(r)
-                        #shutil.rmtree(r)
-
-
-        delPath = list(set(delPath))
-
-        for d in delPath:
-            try:
-                shutil.rmtree(d)
-
-            except Exception as R:
-                logging.info("刪除資料夾失敗 : " + str(d))
-                # print("刪除資料夾失敗 : " + str(R))
-
-        '''
-                             

@@ -1,0 +1,35 @@
+[Wafer Information]
+Wafer Number,11
+Wafer ID,A107-Q336351-351
+Job Name,X2L3QBJL_R_08_05
+Model Name,EagleT
+Lot Number,23C01731-001R
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1345.33,Y,2274.899
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/12/2024 03:26
+End Time,01/12/2024 03:29
+Inspection Time,0:03:19
+Photo Time,0:00:00
+Data Output Time,01/12/2024 05:13
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F29 Silicon powder
+11,A107-Q336351-351,116,115,99.137931,1,1,1
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+44,3,50,54.780876,20.182428,311.386032,3
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F29 Silicon powder
+11,A107-Q336351-351,116,115,99.137931,1,1,1
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+44,3,50,54.780876,20.182428,311.386032,3
+

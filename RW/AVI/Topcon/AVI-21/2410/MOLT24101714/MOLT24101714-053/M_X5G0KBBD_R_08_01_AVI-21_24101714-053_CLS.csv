@@ -1,0 +1,132 @@
+[Wafer Information]
+        Program Name, X5G0KBBD_R_08_01
+        Model Name  , AVI-21          
+        Lot Number  , 24101714-053    
+        User Name   , NAME            
+        Memo        , G1+G2+G3        
+        WAF Type    , T.F. 200mm      
+        WAF Size(mm), 200
+        C-size CYCl XY(um) ,X, 3087.1,Y, 3002.9
+        Valid SizeXY(um)   ,X,   2579,Y,   2508
+        INSP Chip Num      ,       211
+        Chip Num.XY        ,X,     68,Y,     70
+        WAF HGHT(um),     197
+[INSP],
+NUM, 3,
+STRT TM,2024/ 2/ 1,13: 5:25,
+END TM,2024/ 2/ 1,15: 2:13,
+WRK TM, 1:56:48
+        Recipe-No,M01,M26,M27
+        <M01>,MAG, 2.50, Pixel, 0.596480, 0.595810
+        ,Learn, 68
+        (Setting2)
+        ,Light Adj, 1, Serface, 0, MAG, 2.50, BAD, 0, PAD, 0, BMP, 0, MEAS, 1, ABS, 0
+        (Inspect 1)
+        ,AGC, 0, Tol, 70, Local Search, 0,Tol, 2, Smooth, 1, Large, 0, Num., 3,AND/OR, AND
+        ,Black,    Thresuld, 1.20,Sens,    90, Size,    10, Area,    15
+        ,White,    Thresuld, 1.20,Sens,    80, Size,    10, Area,    15
+        ,Gray,    0, 0
+        ,Size-Judge, S01, Black,  1, Thresuld, 1.20, Sens,   60, Size,     4, Area,     7, White,  1, Thresuld, 1.20, Sens,   60, Size,     4, Area,     7, LUT,  1,   0, FILTER,   0
+        ,Size-Judge, S02, Black,  1, Thresuld, 1.20, Sens,   55, Size,     4, Area,    10, White,  1, Thresuld, 1.20, Sens,   40, Size,     3, Area,     7, LUT,  1,   1, FILTER,   0
+        ,Size-Judge, S03, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Size-Judge, S04, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Size-Judge, S05, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Size-Judge, S06, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Size-Judge, S07, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Size-Judge, S08, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Size-Judge, S09, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Size-Judge, S10, Black,  0, Thresuld, 1.20, Sens,   90, Size,     2, Area,     1, White,  0, Thresuld, 1.20, Sens,   80, Size,     2, Area,     3, LUT,  0,   2, FILTER,   0
+        ,Line Width Insp., L01,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L02,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L03,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L04,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L05,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L06,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L07,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L08,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L09,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L10,     1Å`    1, Black,  50, White,  50, Setup,  0
+        (Inspect 2)
+        ,Search, 2, (,190,190,), Feedback, 0, (,50,50,), (,50,50,), Limit, 70, Speed, 1, Detale, 1, Rotate, 1, 1.3
+        ,PAD,    RECT,   50,128, 25,  0, 3,128,  20, 6, Ball, 50,100,200,130, 0, 0, 50,100,  0
+        ,BMP,    RECT,   50,128, 25,  0, 3,128,  20, 6, Ball, 50,100,200,130, 0, 0, 50,100,  0
+        ,BAD, 0,60,0, Marking, 0,0,0, Chip-Sel, 0,200, BAD2, 0,60,0, BAD3, 0,60,0
+        <M26>,MAG, 5.00, Pixel, 0.299670, 0.299930
+        ,Learn
+        (Setting2)
+        ,Light Adj, 1, Serface, 0, MAG, 2.50, BAD, 0, PAD, 0, BMP, 0, MEAS, 1, ABS, 0
+        (Inspect 1)
+        ,AGC, 1, Tol, 70, Local Search, 0,Tol, 2, Smooth, 1, Large, 0, Num., 3,AND/OR, AND
+        ,Black,    Thresuld, 1.20,Sens,   200, Size,     5, Area,    10
+        ,White,    Thresuld, 1.20,Sens,   200, Size,     5, Area,    10
+        ,Gray,    0, 0
+        ,Size-Judge, S01, Black,  1, Thresuld, 1.20, Sens,  150, Size,     3, Area,     8, White,  1, Thresuld, 1.20, Sens,  150, Size,     3, Area,     8, LUT,  1,   0, FILTER,   0
+        ,Size-Judge, S02, Black,  0, Thresuld, 1.20, Sens,  200, Size,     3, Area,     8, White,  0, Thresuld, 1.20, Sens,  200, Size,     5, Area,    10, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S03, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S04, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S05, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S06, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S07, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S08, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S09, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S10, Black,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     1, White,  0, Thresuld, 1.20, Sens,  200, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Line Width Insp., L01,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L02,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L03,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L04,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L05,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L06,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L07,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L08,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L09,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L10,     1Å`    1, Black,  50, White,  50, Setup,  0
+        (Inspect 2)
+        ,Search, 2, (,150,150,), Feedback, 0, (,50,50,), (,50,50,), Limit, 70, Speed, 1, Detale, 1, Rotate, 1, 1.2
+        ,PAD,    RECT,   50,128, 25,  0, 3,128,  20, 6, Ball, 50,100,200,130, 0, 0, 50,100,  0
+        ,BMP,    RECT,   50,128, 25,  0, 3,128,  20, 6, Ball, 50,100,200,130, 0, 0, 50,100,  0
+        ,BAD, 0,60,0, Marking, 0,0,0, Chip-Sel, 0,200, BAD2, 0,60,0, BAD3, 0,60,0
+        <M27>,MAG, 2.50, Pixel, 0.596480, 0.595810
+        ,Learn, 32
+        (Setting2)
+        ,Light Adj, 1, Serface, 0, MAG, 2.50, BAD, 0, PAD, 0, BMP, 1, MEAS, 1, ABS, 0
+        (Inspect 1)
+        ,AGC, 0, Tol, 70, Local Search, 0,Tol, 2, Smooth, 1, Large, 0, Num., 3,AND/OR, AND
+        ,Black,    Thresuld, 1.20,Sens,   255, Size,    10, Area,    15
+        ,White,    Thresuld, 1.20,Sens,   255, Size,    10, Area,    20
+        ,Gray,    0, 0
+        ,Size-Judge, S01, Black,  1, Thresuld, 1.20, Sens,   50, Size,     5, Area,    10, White,  1, Thresuld, 1.20, Sens,   50, Size,     5, Area,    10, LUT,  1,   0, FILTER,   0
+        ,Size-Judge, S02, Black,  0, Thresuld, 1.20, Sens,  255, Size,     3, Area,     8, White,  1, Thresuld, 1.20, Sens,   50, Size,    10, Area,    15, LUT,  1,   2, FILTER,   0
+        ,Size-Judge, S03, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S04, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S05, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S06, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S07, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S08, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S09, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Size-Judge, S10, Black,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     1, White,  0, Thresuld, 1.20, Sens,  255, Size,     2, Area,     3, LUT,  0,   0, FILTER,   0
+        ,Line Width Insp., L01,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L02,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L03,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L04,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L05,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L06,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L07,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L08,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L09,     1Å`    1, Black,  50, White,  50, Setup,  0
+        ,Line Width Insp., L10,     1Å`    1, Black,  50, White,  50, Setup,  0
+        (Inspect 2)
+        ,Search, 2, (,190,190,), Feedback, 0, (,50,50,), (,50,50,), Limit, 70, Speed, 1, Detale, 1, Rotate, 1, 1.2
+        ,PAD,    RECT,   50,128, 25,  0, 3,128,  20, 1, Ball, 50,100,200,130, 0, 0, 50,100,  0
+        ,BMP,    RECT,   10,128, 15,  0, 3,135,   3, 1, Ball, 50,100,200,130, 0, 0, 50,100,  0
+        ,BAD, 0,60,0, Marking, 0,0,0, Chip-Sel, 0,200, BAD2, 0,60,0, BAD3, 0,60,0
+        End Time,2024/ 2/ 1,15: 2:13
+[ALGHMNT]
+WAF,X,   0.0000,Y,   0.0000
+ANGL,   0.0000
+WRK AXS ORGN,X,   0.2209,Y,  -0.5465
+RUN HGHT,Z,   0.1937
+[INSP LGHT],Coaxial,81,STRB,76,Ring,59,STRB,63,Transparent,0,STRB,0
+,Brightness selection,Standard,Coaxial ND Angle,101.7,Ring ND Angle31.3,Camera gain,2x
+[STG MV ERR],X,  -0.0000,Y,   0.0000,Z,   0.0000,É∆,   0.0000
+
+

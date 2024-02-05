@@ -1,0 +1,45 @@
+[Wafer Information]
+Wafer Number,9
+Wafer ID,A40-Q332343-350
+Job Name,X2L3QBJL_R_08_QB1
+Model Name,EagleT
+Lot Number,MOLT23C01412-002
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1345.33,Y,2274.899
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/11/2024 06:09
+End Time,01/11/2024 06:10
+Inspection Time,0:00:25
+Photo Time,0:00:30
+Data Output Time,01/11/2024 07:38
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+9,A40-Q332343-350,340,338,99.411765,2,6,2,4
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+49,64,50,369.050112,3797.179668,78351.0687,1
+49,64,50,121.094568,112.444956,2139.337368,4
+49,64,50,121.094568,112.444956,2098.972512,4
+49,64,50,121.094568,112.444956,2096.089308,4
+49,64,50,118.211364,112.444956,2159.519796,4
+49,63,50,369.050112,100.91214,4979.293308,1
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+9,A40-Q332343-350,340,340,100,0,0,0
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+49,64,Pass,369.050112,3797.179668,78351.0687,1
+49,64,Pass,121.094568,112.444956,2139.337368,4
+49,64,Pass,121.094568,112.444956,2098.972512,4
+49,64,Pass,121.094568,112.444956,2096.089308,4
+49,64,Pass,118.211364,112.444956,2159.519796,4
+49,63,Pass,369.050112,100.91214,4979.293308,1
+

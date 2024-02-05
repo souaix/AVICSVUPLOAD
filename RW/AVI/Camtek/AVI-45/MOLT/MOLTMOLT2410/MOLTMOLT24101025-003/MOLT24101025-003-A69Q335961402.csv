@@ -1,0 +1,43 @@
+[Wafer Information]
+Wafer Number,21
+Wafer ID,A69-Q335961-402
+Job Name,X2L3QBJL_R_08_QB1
+Model Name,EagleT
+Lot Number,MOLT24101025-003
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1345.33,Y,2274.899
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/25/2024 01:48
+End Time,01/25/2024 01:49
+Inspection Time,0:00:25
+Photo Time,0:00:19
+Data Output Time,01/25/2024 02:16
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F29 Silicon powder
+21,A69-Q335961-402,340,335,98.529412,5,5,2,3
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+1,31,50,63.430488,57.66408,818.829936,3
+19,31,50,100.91214,291.203604,4734.220968,1
+28,32,50,34.598448,8.649612,80.729712,1
+37,31,50,178.758648,74.963304,1184.996844,1
+71,31,50,95.145732,54.780876,867.844404,3
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F29 Silicon powder
+21,A69-Q335961-402,340,340,100,0,0,0
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+1,31,Pass,63.430488,57.66408,818.829936,3
+19,31,Pass,100.91214,291.203604,4734.220968,1
+28,32,Pass,34.598448,8.649612,80.729712,1
+37,31,Pass,178.758648,74.963304,1184.996844,1
+71,31,Pass,95.145732,54.780876,867.844404,3
+

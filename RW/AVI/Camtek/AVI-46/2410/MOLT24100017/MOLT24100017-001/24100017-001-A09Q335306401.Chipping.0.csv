@@ -1,0 +1,49 @@
+[Wafer Information]
+Wafer Number,9
+Wafer ID,A09Q335306401.Chipping.0
+Job Name,X2L3QBJL_R_08_05
+Model Name,EagleT
+Lot Number,24100017-001
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1357.753,Y,2285.221
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/09/2024 08:50
+End Time,01/09/2024 08:51
+Inspection Time,0:01:07
+Photo Time,0:00:00
+Data Output Time,01/09/2024 09:39
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+9,A09Q335306401.Chipping.0,5518,5512,99.891265,6,8,8
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+10,31,50,5.732498,80.254972,88.853719,1
+11,31,50,2.866249,40.127486,40.127486,1
+11,31,50,2.866249,8.598747,8.598747,1
+35,49,50,2.866249,5.732498,5.732498,1
+35,49,50,2.866249,5.732498,5.732498,1
+51,43,50,2.866249,5.732498,5.732498,1
+73,58,50,2.866249,11.464996,11.464996,1
+85,43,50,2.866249,8.598747,8.598747,1
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F07 Incoming microlens periphery peeling
+9,A09Q335306401.Chipping.0,5518,5512,99.891265,6,8,8
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+10,31,50,5.732498,80.254972,88.853719,1
+11,31,50,2.866249,40.127486,40.127486,1
+11,31,50,2.866249,8.598747,8.598747,1
+35,49,50,2.866249,5.732498,5.732498,1
+35,49,50,2.866249,5.732498,5.732498,1
+51,43,50,2.866249,5.732498,5.732498,1
+73,58,50,2.866249,11.464996,11.464996,1
+85,43,50,2.866249,8.598747,8.598747,1
+

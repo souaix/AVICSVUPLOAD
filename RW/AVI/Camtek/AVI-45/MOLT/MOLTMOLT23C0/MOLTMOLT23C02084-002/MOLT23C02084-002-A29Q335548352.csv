@@ -1,0 +1,39 @@
+[Wafer Information]
+Wafer Number,23
+Wafer ID,A29-Q335548-352
+Job Name,X2L3QBKL_R_08_QB1
+Model Name,EagleT
+Lot Number,MOLT23C02084-002
+Description,
+Wafer Size(mm),200
+Die Size XY(um),X,1345.33,Y,2274.899
+Chip Num. XY,X,68,Y,104
+Wafer Thickness(um),0
+
+[INSP]
+Start Time,01/22/2024 05:35
+End Time,01/22/2024 05:36
+Inspection Time,0:00:26
+Photo Time,0:00:16
+Data Output Time,01/22/2024 06:02
+
+[Before Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F13 Pad area damage
+23,A29-Q335548-352,340,337,99.117647,3,3,3
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+49,60,50,5.766408,11.532816,23.065632,4
+50,21,50,8.649612,14.41602,31.715244,4
+103,32,50,11.532816,11.532816,37.481652,4
+
+[After Review]
+Wafer Number,Wafer ID,Total,Good,Yield(%),NG Total,Defect,F13 Pad area damage
+23,A29-Q335548-352,340,340,100,0,0,0
+
+[Defect List]
+X,Y,DefectMode,Size X,Size Y,Area,Area No
+49,60,Pass,5.766408,11.532816,23.065632,4
+50,21,Pass,8.649612,14.41602,31.715244,4
+103,32,Pass,11.532816,11.532816,37.481652,4
+
