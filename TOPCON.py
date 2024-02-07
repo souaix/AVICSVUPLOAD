@@ -174,7 +174,7 @@ class AVICsvForEDA_Topcon:
                                                 modify_file_log.append(
                                                     modify_file)
 
-                                                PATH = self.SavePathLv1+"/"+self.SavePathLv2+"/"+self.SavePathLv3+"/" + \
+                                                PATH = "/home/cim/MAP/AVICSVUPLOAD/"+self.SavePathLv1+"/"+self.SavePathLv2+"/"+self.SavePathLv3+"/" + \
                                                     self.SavePathLv4+"/"+self.SavePathLv5+"/" + \
                                                     self.SavePathLv6+"/"+self.SavePathLv7+"/"
                                                 if not os.path.isdir(PATH):
