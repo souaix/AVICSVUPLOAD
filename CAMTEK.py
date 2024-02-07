@@ -71,6 +71,8 @@ class AVICsvForEDA_Camtek :
         self.UPDATELastModify = int()
         
     def DLLogic(self):
+    
+        logging.info("-----"+self.FTPip+"-----")
 
         ftp =  FTP(self.FTPip, self.FTPaccount, self.FTPpassword)
         ftp.cwd(self.RootDir)
@@ -109,7 +111,11 @@ class AVICsvForEDA_Camtek :
 
                         #第二層目錄
                         for j,w in enumerate(self.SubjectInfo):
-                            
+
+                            #logging.info("第二層資訊 : "+w)
+
+                            cwdlv2 = 0  #若cwd錯誤則=1，不回到前一目錄
+
                             #清空地三層目錄資訊
                             self.SubSubInfo=[]
 
@@ -131,16 +137,24 @@ class AVICsvForEDA_Camtek :
                                 self.SavePathLv7 = "MOLT"+dirname_subject
 #                                 print(self.SavePathLv7)                    
 
+                                try:
+                                    #進入第二層目錄
+                                    ftp.cwd(dirname_subject)      
+                                    #取得第三層目錄資訊
+                                    ftp.retrlines('MLSD', self.SubSubInfo.append)      
 
-                                #進入第二層目錄
-                                ftp.cwd(dirname_subject)      
-                                #取得第三層目錄資訊
-                                ftp.retrlines('MLSD', self.SubSubInfo.append)      
+                                except Exception as C:
+                                    logging.info("進入第二層目錄錯誤 : "+str(C))
+                                    cwdlv2=1
 
                                 if(len(self.SubSubInfo)>0):
 
                                     #WAFERNO目錄
                                     for k,x in enumerate(self.SubSubInfo):   
+
+                                        #logging.info("第三層資訊 : "+x)
+
+                                        cwdlv3=0
 
                                         #清空第三層檔案資訊
                                         self.Files=[]                        
@@ -151,36 +165,48 @@ class AVICsvForEDA_Camtek :
                                         #DIR名稱
                                         dirname_subsub = x.split(';')[2].strip()                                                              
 
-                                        #進入第三層目錄
-                                        ftp.cwd(dirname_subsub)  
+                                        try:
+                                            #進入第三層目錄
+                                            ftp.cwd(dirname_subsub)  
 
-                                        #取得第三層檔案資訊
-                                        ftp.retrlines('MLSD', self.Files.append) 
+                                            #取得第三層檔案資訊
+                                            ftp.retrlines('MLSD', self.Files.append) 
+
+                                        except Exception as C:
+                                            logging.info("進入第三層目錄錯誤 : "+str(C))
+                                            cwdlv3=1
+
 
                                         if(len(self.Files)>0 and modify_subsub>self.LastModify):
                                             #最終檔案
                                             for l,y in enumerate(self.Files):     
+
+                                                #logging.info("最終檔案資訊 : "+y)
                                                 
                                                 #最後修改時間
                                                 modify_file = y.split(';')[1].strip()        
                                                 modify_file = int(modify_file.split('=')[1])
                                                 
                                                 #DIR名稱
-                                                filename = y.split(';')[3].strip()   
+                                                try:
+                                                    filename = y.split(';')[3].strip()   
 
-                                                if("."+self.ext in filename and modify_file>self.LastModify):  
-                                                    
-                                                    modify_file_log.append(modify_file)
-                                                    
-                                                    PATH = self.SavePathLv1+"/"+self.SavePathLv2+"/"+self.SavePathLv3+"/"+self.SavePathLv4+"/"+self.SavePathLv5+"/"+self.SavePathLv6+"/"+self.SavePathLv7+"/"
-                                                    if not os.path.isdir(PATH):
-                                                        os.makedirs(PATH)
-                                                    print(self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+dirname_subsub+"/"+filename)
-                                                    downloadfile(ftp, self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+dirname_subsub+"/"+filename, PATH+filename)
-
-                                        ftp.cwd('../')                                                          
-
-                                ftp.cwd('../')    
+                                                    if("."+self.ext in filename and modify_file>self.LastModify):  
+                                                        
+                                                        modify_file_log.append(modify_file)
+                                                        
+                                                        PATH = self.SavePathLv1+"/"+self.SavePathLv2+"/"+self.SavePathLv3+"/"+self.SavePathLv4+"/"+self.SavePathLv5+"/"+self.SavePathLv6+"/"+self.SavePathLv7+"/"
+                                                        if not os.path.isdir(PATH):
+                                                            os.makedirs(PATH)
+                                                        print(self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+dirname_subsub+"/"+filename)
+                                                        downloadfile(ftp, self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+dirname_subsub+"/"+filename, PATH+filename)
+                                                except Exception as F:
+                                                    logging.info("DIR ERROR : "+str(F))
+                                        
+                                        if(cwdlv3==0):
+                                            ftp.cwd('../')                                                                                          
+                                if(cwdlv2==0):
+                                    ftp.cwd('../')    
                         
         if(len(modify_file_log)>0):                
             modify_file_log = max(modify_file_log)
@@ -204,7 +230,6 @@ class AVICsvForEDA_Camtek :
             root = "/".join(root[5:])
                 
             root = root.replace("\\", "/")
-            root = root.replace("./", "")
 
             for f in file_list:
                 rootPath.append(root)                
@@ -219,11 +244,11 @@ class AVICsvForEDA_Camtek :
                 logging.info("開始上傳 : "+sftpPath[p])
                 
                 SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
-                os.remove("/home/cim/MAP/AVICSVUPLOAD"+sftpPath[p])
+                os.remove("/home/cim/MAP/AVICSVUPLOAD/"+sftpPath[p])
 
 
         except Exception as E:
-            logging.debug("上傳檔案失敗 : " + str(E))
+            logging.info("上傳檔案失敗 : " + str(E))
             delPass=0
             # print("上傳檔案失敗 : " + str(E))
 

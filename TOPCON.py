@@ -129,6 +129,8 @@ class AVICsvForEDA_Topcon:
 
                         # 第二層目錄
                         for j, w in enumerate(self.SubjectInfo):
+                            
+                            cwdlv2 = 0 #若迴圈結束=1，則不退出目錄 
 
                             # 最後修改時間
                             modify_subject = w.split(';')[1].strip()
@@ -139,11 +141,17 @@ class AVICsvForEDA_Topcon:
                             self.Files=[]
                             if(dirname_subject == 'M01' and modify_subject > self.LastModify):
 
-                                # 進入第二層目錄
-                                ftp.cwd(dirname_subject)
+                                try:
+                                    # 進入第二層目錄
+                                    ftp.cwd(dirname_subject)
 
-                                # 取得第二層檔案資訊
-                                ftp.retrlines('MLSD', self.Files.append)
+                                    # 取得第二層檔案資訊
+                                    ftp.retrlines('MLSD', self.Files.append)
+
+                                except Exception as C:
+                                    logging.info("進入第二層目錄錯誤 : "+str(C))
+                                    cwdlv2=1
+
 
                                 if(len(self.Files) > 0):
                                     # 最終檔案
@@ -177,9 +185,9 @@ class AVICsvForEDA_Topcon:
                                                 downloadfile(
                                                     ftp, self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+filename, PATH+filename)
 
-                                    ftp.cwd('../')
 
-                            ftp.cwd('../')
+                            if(cwdlv2==0):
+                                ftp.cwd('../')
 
         if(len(modify_file_log) > 0):
             modify_file_log = max(modify_file_log)
@@ -189,70 +197,55 @@ class AVICsvForEDA_Topcon:
 
     def uploadfile(self):
 
-        sftpPath = []
+        #提供sftp_upload使用
+        sftpPath = []       #上傳完整路徑
+        rootPath=[]         #上傳目錄路徑
+
         delPath = []
         delPass = 1 # 1=CAN DEL ; 0=CANNOT DEL
 
         for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
-
-            if(len(dir_list) == 0):
-                root = root.replace("\\", "/")
-                root = root.replace("./", "")
-                sftpPath.append(root)
+            
+            #因排程會把/home/cim/MAP/AVICSVUPLOAD吃進去，故要排除
+            root = root.split("/")
+            root = "/".join(root[5:])
                 
-                print("sftpPATH:")
-                print(sftpPath)
-                print("-------------------")
+            root = root.replace("\\", "/")
 
-                logging.info("---START UPLOAD---")
+            for f in file_list:
+                rootPath.append(root)                
+                sftpPath.append(root+"/"+f)
+
+        logging.info("---START UPLOAD---")
+
+            
+        try:                    
+            for p in range(0,len(sftpPath)):
+
+                logging.info("開始上傳 : "+sftpPath[p])
                 
-                try:                    
-                    for p in sftpPath:
-                        i=0                        
-                        for root, dir_list, file_list in os.walk(p):
-                            if i == 1 :
-                                break
-                            else:
+                SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
+                os.remove("/home/cim/MAP/AVICSVUPLOAD/"+sftpPath[p])
 
-                                print(root)
-                                print(dir_list)
-                                print(file_list)
-                                print("===================")
-                                print("p in  sftpPath:")
-                                print(p)
-                                print("file_list:")
-                                print(file_list)
-                                print("------------------------------")
-                                for f in file_list:
-                                    print("f in file_list:")
-                                    print(f)
-                                    print("------------------------------")
-                                    #                                 print(p+"/"+f)
 
-                                    logging.info("上傳檔案:"+p+"/"+f)
-                                    SFT.sftp_upload(self.SFTPip, p, p+"/"+f)
-                                    os.remove(p+"/"+f)
+        except Exception as E:
+            logging.info("上傳檔案失敗 : " + str(E))
+            delPass=0
+            # print("上傳檔案失敗 : " + str(E))
 
-                                i=1
+        logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
 
-                except Exception as E:
-                    logging.debug("上傳檔案失敗 : " + str(E))
-                    delPass=0
-                    # print("上傳檔案失敗 : " + str(E))
+        try:
+            if(self.UPDATELastModify != ''):
+                sql = "REPLACE INTO log(eqpid,lastdatetime) values ('" + \
+                    self.SavePathLv4+"','" + \
+                    str(self.UPDATELastModify)+"')"                        
 
-                logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
+                con_cim.execute(sql)
 
-                try:
-                    if(self.UPDATELastModify != ''):
-                        sql = "REPLACE INTO log(eqpid,lastdatetime) values ('" + \
-                            self.SavePathLv4+"','" + \
-                            str(self.UPDATELastModify)+"')"                        
-
-                        con_cim.execute(sql)
-
-                except Exception as I:
-                    logging.info("INSERT LOG失敗 : " + str(I))
-                    # print("INSERT LOG失敗 : " + str(I))
+        except Exception as I:
+            logging.info("INSERT LOG失敗 : " + str(I))
+            # print("INSERT LOG失敗 : " + str(I))
 
         logging.info("---DELETE LOCAL FILES---")
 
