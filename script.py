@@ -34,7 +34,11 @@ df = pd.read_sql(sql,con_cim)
 logging.info('-----Topcon---------')
 
 df_ = df[df["EQUIP_TYPE"] == "Topcon"]
+
+#df_ = df[df["EQUIP_ID"] == "AVI-20"]
+
 df_.reset_index(inplace=True,drop=True)
+
 
 if(len(df_)>0):
     for i in range(0,len(df_)):
@@ -59,9 +63,11 @@ if(len(df_)>0):
         TOPCON.LastModify = lastdatetime[i]
 
         UPDATELastModify = TOPCON.DLLogic()
-        TOPCON.UPDATELastModify = UPDATELastModify
 
-        TOPCON.uploadfile()
+        if(UPDATELastModify != "FAIL"):
+
+            TOPCON.UPDATELastModify = UPDATELastModify
+            TOPCON.uploadfile()
 
 logging.info('End at - ' + datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 logging.debug('---------------------------------------------------------')
@@ -95,9 +101,12 @@ if(len(df_)>0):
         CAMTEK.LastModify = lastdatetime[i]
 
         UPDATELastModify = CAMTEK.DLLogic()
-        CAMTEK.UPDATELastModify = UPDATELastModify
 
-        CAMTEK.uploadfile()
+        if(UPDATELastModify != "FAIL"):
+
+            CAMTEK.UPDATELastModify = UPDATELastModify
+
+            CAMTEK.uploadfile()
 
     logging.info('End at - ' + datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
     logging.debug('---------------------------------------------------------')

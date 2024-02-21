@@ -79,121 +79,141 @@ class AVICsvForEDA_Topcon:
         logging.info('Last modify at - ' + str(self.LastModify))
         logging.info('FTP connecting...')
 
-        ftp = FTP(self.FTPip, self.FTPaccount, self.FTPpassword)
-        ftp.cwd(self.RootDir)
+        pp = os.popen("ping -c 2 -w 1 "  + self.FTPip )
+        msg = pp.read()
 
-        logging.info('ParentInfo Getting...')
-        ftp.retrlines('MLSD', self.ParentInfo.append)
+        if '0 received' not in msg:
 
-        modify_file_log = []
+            ftp = FTP(self.FTPip, self.FTPaccount, self.FTPpassword)
+            ftp.cwd(self.RootDir)
 
-        # 第一層目錄
-        for i, v in enumerate(self.ParentInfo):
-            if (v.split(';')[0].strip()) == 'type=dir':
+            logging.info('ParentInfo Getting...')
+            ftp.retrlines('MLSD', self.ParentInfo.append)
 
-                # 最後修改時間
-                modify_parent = v.split(';')[1].strip()
-                modify_parent = int(modify_parent.split('=')[1])
+            modify_file_log = []
 
-                # DIR名稱
-                dirname_parent = v.split(';')[2].strip()
+            # 第一層目錄
+            for i, v in enumerate(self.ParentInfo):
+                if (v.split(';')[0].strip()) == 'type=dir':
 
-                # 清空第二層目錄資訊
-                self.SubjectInfo = []
+                    # 最後修改時間
+                    modify_parent = v.split(';')[1].strip()
+                    modify_parent = int(modify_parent.split('=')[1])
 
-                # 測試用
-#                 if(dirname_parent=='MG1092_R_08_01_AVI#20_23C02537-009' and modify_parent>self.LastModify):
-                
-                
-                if(modify_parent > self.LastModify):
+                    # DIR名稱
+                    dirname_parent = v.split(';')[2].strip()
 
-                    # 重進入根目錄
-                    ftp.cwd(self.RootDir)
-                    # 進入第一層目錄
-                    ftp.cwd(dirname_parent)
+                    # 清空第二層目錄資訊
+                    self.SubjectInfo = []
 
-                    dirname_parent.split("_")
-                    self.SavePathLv5 = dirname_parent.split("_")[-1][:4]
-#                                 print(self.SavePathLv5)
+                    # 測試用
+    #                 if(dirname_parent=='MG1092_R_08_01_AVI#20_23C02537-009' and modify_parent>self.LastModify):
+                    
+                    
+                    if(modify_parent > self.LastModify):
 
-                    self.SavePathLv6 = "MOLT"+dirname_parent.split("_")[-1][:8]
-#                                 print(self.SavePathLv6)
+                        # 重進入根目錄
+                        ftp.cwd(self.RootDir)
+                        # 進入第一層目錄
+                        ftp.cwd(dirname_parent)
 
-                    self.SavePathLv7 = "MOLT"+dirname_parent.split("_")[-1][:]
-#                                 print(self.SavePathLv7)
+                        dirname_parent.split("_")
+                        self.SavePathLv5 = dirname_parent.split("_")[-1][:3]
 
-                    # 取得第二層目錄資訊
-                    ftp.retrlines('MLSD', self.SubjectInfo.append)
+                        if("A" in self.SavePathLv5 or "B" in self.SavePathLv5 or "C" in self.SavePathLv5):
+                            self.SavePathLv5 = self.SavePathLv5.replace('A', '10')
+                            self.SavePathLv5 = self.SavePathLv5.replace('B', '11')
+                            self.SavePathLv5 = self.SavePathLv5.replace('C', '12')
+    #                                 print(self.SavePathLv5)
+                        else:
+                            self.SavePathLv5 =  self.SavePathLv5[0:2]+"0"+self.SavePathLv5[2:3]
 
-                    if(len(self.SubjectInfo) > 0):
+                        self.SavePathLv6 = "MOLT"+dirname_parent.split("_")[-1][:8]
+    #                                 print(self.SavePathLv6)
 
-                        # 第二層目錄
-                        for j, w in enumerate(self.SubjectInfo):
-                            
-                            cwdlv2 = 0 #若迴圈結束=1，則不退出目錄 
+                        self.SavePathLv7 = "MOLT"+dirname_parent.split("_")[-1][:]
+    #                                 print(self.SavePathLv7)
 
-                            # 最後修改時間
-                            modify_subject = w.split(';')[1].strip()
-                            modify_subject = int(modify_subject.split('=')[1])
-                            # DIR名稱
-                            dirname_subject = w.split(';')[2].strip()
+                        # 取得第二層目錄資訊
+                        ftp.retrlines('MLSD', self.SubjectInfo.append)
 
-                            self.Files=[]
-                            if(dirname_subject == 'M01' and modify_subject > self.LastModify):
+                        if(len(self.SubjectInfo) > 0):
 
-                                try:
-                                    # 進入第二層目錄
-                                    ftp.cwd(dirname_subject)
+                            # 第二層目錄
+                            for j, w in enumerate(self.SubjectInfo):
+                                
+                                cwdlv2 = 0 #若迴圈結束=1，則不退出目錄 
 
-                                    # 取得第二層檔案資訊
-                                    ftp.retrlines('MLSD', self.Files.append)
+                                # 最後修改時間
+                                modify_subject = w.split(';')[1].strip()
+                                modify_subject = int(modify_subject.split('=')[1])
+                                # DIR名稱
+                                dirname_subject = w.split(';')[2].strip()
 
-                                except Exception as C:
-                                    logging.info("進入第二層目錄錯誤 : "+str(C))
-                                    cwdlv2=1
+                                self.Files=[]
+                                if(dirname_subject == 'M01' and modify_subject > self.LastModify):
 
+                                    try:
+                                        # 進入第二層目錄
+                                        ftp.cwd(dirname_subject)
 
-                                if(len(self.Files) > 0):
-                                    # 最終檔案
-                                    for l, y in enumerate(self.Files):
+                                        # 取得第二層檔案資訊
+                                        ftp.retrlines('MLSD', self.Files.append)
 
-                                        if (y.split(';')[0].strip()) == 'type=file':
-
-                                            # 最後修改時間
-                                            modify_file = y.split(
-                                                ';')[1].strip()
-                                            modify_file = int(
-                                                modify_file.split('=')[1])
-
-                                            # FILE名稱
-
-                                            filename = y.split(';')[3].strip()
-
-                                            if(("."+self.ext in filename or filename in self.AssignFILE) and modify_file > self.LastModify):
-
-                                                modify_file_log.append(
-                                                    modify_file)
-
-                                                PATH = "/home/cim/MAP/AVICSVUPLOAD/"+self.SavePathLv1+"/"+self.SavePathLv2+"/"+self.SavePathLv3+"/" + \
-                                                    self.SavePathLv4+"/"+self.SavePathLv5+"/" + \
-                                                    self.SavePathLv6+"/"+self.SavePathLv7+"/"
-                                                if not os.path.isdir(PATH):
-                                                    os.makedirs(PATH)
-                                                    
-
-                                                print(self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+filename)
-                                                downloadfile(
-                                                    ftp, self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+filename, PATH+filename)
+                                    except Exception as C:
+                                        logging.info("進入第二層目錄錯誤 : "+str(C))
+                                        cwdlv2=1
 
 
-                            if(cwdlv2==0):
-                                ftp.cwd('../')
+                                    if(len(self.Files) > 0):
+                                        # 最終檔案
+                                        for l, y in enumerate(self.Files):
 
-        if(len(modify_file_log) > 0):
-            modify_file_log = max(modify_file_log)
+                                            if (y.split(';')[0].strip()) == 'type=file':
+
+                                                # 最後修改時間
+                                                modify_file = y.split(
+                                                    ';')[1].strip()
+                                                modify_file = int(
+                                                    modify_file.split('=')[1])
+
+                                                # FILE名稱
+
+                                                filename = y.split(';')[3].strip()
+
+                                                #有_CLS字串才要上傳(TOPCON規則)
+                                                if( ( ("_CLS" in filename and "."+self.ext in filename) or filename in self.AssignFILE) and modify_file > self.LastModify):
+
+                                                    modify_file_log.append(
+                                                        modify_file)
+
+                                                    PATH = "/home/cim/MAP/AVICSVUPLOAD/"+self.SavePathLv1+"/"+self.SavePathLv2+"/"+self.SavePathLv3+"/" + \
+                                                        self.SavePathLv4+"/"+self.SavePathLv5+"/" + \
+                                                        self.SavePathLv6+"/"+self.SavePathLv7+"/"
+                                                    if not os.path.isdir(PATH):
+                                                        os.makedirs(PATH)
+                                                        
+
+                                                    print(self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+filename)
+                                                    downloadfile(
+                                                        ftp, self.RootDir+"/"+dirname_parent+"/"+dirname_subject+"/"+filename, PATH+filename)
+
+
+                                if(cwdlv2==0):
+                                    ftp.cwd('../')
+
+            if(len(modify_file_log) > 0):
+                modify_file_log = max(modify_file_log)
+            else:
+                modify_file_log = ''
+            return modify_file_log
+
         else:
-            modify_file_log = ''
-        return modify_file_log
+            logging.info('Ping IP Failed')
+    
+            return "FAIL"
+
+
 
     def uploadfile(self):
 
@@ -252,6 +272,7 @@ class AVICsvForEDA_Topcon:
         try:
             if delPass==1:
                 shutil.rmtree('/home/cim/MAP/AVICSVUPLOAD/RW')
+                print('jump del')
             else:
                 logging.info("有檔案未上傳成功，禁止刪除資料夾")
 
