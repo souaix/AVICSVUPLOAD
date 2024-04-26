@@ -135,6 +135,9 @@ class AVICsvForEDA_Camtek :
                                 if(modify_subject>self.LastModify):
                                     self.SavePathLv5 = dirname_subject[0:4]
 
+                                if (self.SavePathLv5[:1]!='2' and self.SavePathLv5[:1]!='3'):
+                                    continue;
+
 
                                     if("A" in self.SavePathLv5 or "B" in self.SavePathLv5 or "C" in self.SavePathLv5):
                                         self.SavePathLv5 = self.SavePathLv5.replace('A', '10')
@@ -243,35 +246,45 @@ class AVICsvForEDA_Camtek :
         delPass = 1 # 1=CAN DEL ; 0=CANNOT DEL
 
         for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
-            
             #因排程會把/home/cim/MAP/AVICSVUPLOAD吃進去，故要排除
+            #本地端沒有/RW
+            #FTP端有/RW
             root = root.split("/")
-            root = "/".join(root[5:])
-                
-            root = root.replace("\\", "/")
+
+
+            #組成RW/A/B/C...
+            sftpPath = "/".join(root[5:])
+            sftpPath = sftpPath.replace("\\", "/")
+
+            localPath = "/".join(root[:])
+            localPath = localPath.replace("\\","/")
+
 
             for f in file_list:
-                rootPath.append(root)                
-                sftpPath.append(root+"/"+f)
+                localPaths.append(localPath+"/"+f)
+                sftpPaths.append(sftpPath+"/")
 
         logging.info("---START UPLOAD---")
 
-            
-        try:                    
-            for p in range(0,len(sftpPath)):
 
-                logging.info("開始上傳 : "+sftpPath[p])
-                
-                SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
-                os.remove("/home/cim/MAP/AVICSVUPLOAD/"+sftpPath[p])
+        try:
+            for p in range(0,len(sftpPaths)):
+
+                logging.info("開始上傳 : "+sftpPaths[p])
+                logging.info("PATH:"+sftpPaths[p])
+                logging.info("FILE:"+localPaths[p])
+
+                SFT.sftp_upload(self.SFTPip, sftpPaths[p], localPaths[p])
+                os.remove(localPaths[p])
 
 
         except Exception as E:
             logging.info("上傳檔案失敗 : " + str(E))
             delPass=0
-            # print("上傳檔案失敗 : " + str(E))
+            print("上傳檔案失敗 : " + str(E))
 
         logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
+
 
         try:
             if(self.UPDATELastModify != ''):
@@ -283,12 +296,13 @@ class AVICsvForEDA_Camtek :
 
         except Exception as I:
             logging.info("INSERT LOG失敗 : " + str(I))
-            # print("INSERT LOG失敗 : " + str(I))
+            print("INSERT LOG失敗 : " + str(I))
 
         logging.info("---DELETE LOCAL FILES---")
 
         try:
             if delPass==1:
+                print("刪除tree")
                 shutil.rmtree('/home/cim/MAP/AVICSVUPLOAD/RW')
             else:
                 logging.info("有檔案未上傳成功，禁止刪除資料夾")

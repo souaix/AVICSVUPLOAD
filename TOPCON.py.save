@@ -57,6 +57,7 @@ class AVICsvForEDA_Topcon:
 
         self.Files = []
 
+        self.LastModify = str()
 
         self.SavePathLv1 = 'RW'
         self.SavePathLv2 = 'AVI'
@@ -70,7 +71,6 @@ class AVICsvForEDA_Topcon:
 
         self.LastModify = int()
         self.UPDATELastModify = int()
-        self.UPDATEEndDay = int()
 
         self.AssignFILE = []
 
@@ -109,10 +109,8 @@ class AVICsvForEDA_Topcon:
                     # 測試用
     #                 if(dirname_parent=='MG1092_R_08_01_AVI#20_23C02537-009' and modify_parent>self.LastModify):
                     
-                    print(modify_parent)
-                    print(self.UPDATEEndDay)
-                    print("-------")
-                    if(modify_parent > self.LastModify and modify_parent <= self.UPDATEEndDay):
+                    
+                    if(modify_parent > self.LastModify):
 
                         # 重進入根目錄
                         ftp.cwd(self.RootDir)
@@ -122,8 +120,8 @@ class AVICsvForEDA_Topcon:
                         dirname_parent.split("_")
                         self.SavePathLv5 = dirname_parent.split("_")[-1][:3]
 
-                        if (self.SavePathLv5[:1]!='2' and self.SavePathLv5[:1]!='3'):
-                            continue;
+                        # 若不符合規則則略過
+                        if(self.SavePathLv5[:1] != '2' and self.SavePathLv5[:1] != '3')
 
                         if("A" in self.SavePathLv5 or "B" in self.SavePathLv5 or "C" in self.SavePathLv5):
                             self.SavePathLv5 = self.SavePathLv5.replace('A', '10')
@@ -156,7 +154,7 @@ class AVICsvForEDA_Topcon:
                                 dirname_subject = w.split(';')[2].strip()
 
                                 self.Files=[]
-                                if(dirname_subject == 'M01' and modify_subject > self.LastModify and modify_subject <= self.UPDATEEndDay):
+                                if(dirname_subject == 'M01' and modify_subject > self.LastModify):
 
                                     try:
                                         # 進入第二層目錄
@@ -187,7 +185,7 @@ class AVICsvForEDA_Topcon:
                                                 filename = y.split(';')[3].strip()
 
                                                 #有_CLS字串才要上傳(TOPCON規則)
-                                                if( ( ("_CLS" in filename and "."+self.ext in filename) or filename in self.AssignFILE) and modify_file > self.LastModify and modify_file <= self.UPDATEEndDay):
+                                                if( ( ("_CLS" in filename and "."+self.ext in filename) or filename in self.AssignFILE) and modify_file > self.LastModify):
 
                                                     modify_file_log.append(
                                                         modify_file)
@@ -223,52 +221,40 @@ class AVICsvForEDA_Topcon:
     def uploadfile(self):
 
         #提供sftp_upload使用
-        sftpPaths = []       #上傳完整路徑
-        localPaths=[]         #上傳目錄路徑
+        sftpPath = []       #上傳完整路徑
+        rootPath=[]         #上傳目錄路徑
 
         delPath = []
         delPass = 1 # 1=CAN DEL ; 0=CANNOT DEL
 
-        localRoot = '/home/cim/MAP/AVICSVUPLOAD'
-
-        for root, dir_list, file_list in os.walk(localRoot+'/RW'):
+        for root, dir_list, file_list in os.walk('/home/cim/MAP/AVICSVUPLOAD/RW'):
             
             #因排程會把/home/cim/MAP/AVICSVUPLOAD吃進去，故要排除
-            #本地端沒有/RW
-            #FTP端有/RW
             root = root.split("/")
-
-            
-            #組成RW/A/B/C...
-            sftpPath = "/".join(root[5:])                
-            sftpPath = sftpPath.replace("\\", "/")
-
-            localPath = "/".join(root[:])
-            localPath = localPath.replace("\\","/")
-
+            root = "/".join(root[5:])
+                
+            root = root.replace("\\", "/")
 
             for f in file_list:
-                localPaths.append(localPath+"/"+f)                
-                sftpPaths.append(sftpPath+"/")
+                rootPath.append(root)                
+                sftpPath.append(root+"/"+f)
 
         logging.info("---START UPLOAD---")
 
             
         try:                    
-            for p in range(0,len(sftpPaths)):
+            for p in range(0,len(sftpPath)):
 
-                logging.info("開始上傳 : "+sftpPaths[p])
-                logging.info("PATH:"+sftpPaths[p])
-                logging.info("FILE:"+localPaths[p])
-
-                SFT.sftp_upload(self.SFTPip, sftpPaths[p], localPaths[p])
-                os.remove(localPaths[p])
+                logging.info("開始上傳 : "+sftpPath[p])
+                
+                SFT.sftp_upload(self.SFTPip, rootPath[p], sftpPath[p])
+                os.remove("/home/cim/MAP/AVICSVUPLOAD/"+sftpPath[p])
 
 
         except Exception as E:
             logging.info("上傳檔案失敗 : " + str(E))
             delPass=0
-            print("上傳檔案失敗 : " + str(E))
+            # print("上傳檔案失敗 : " + str(E))
 
         logging.info("---START UPDATE ModifyTime : "+self.SavePathLv4+" - "+str(self.UPDATELastModify))
 
@@ -282,7 +268,7 @@ class AVICsvForEDA_Topcon:
 
         except Exception as I:
             logging.info("INSERT LOG失敗 : " + str(I))
-            print("INSERT LOG失敗 : " + str(I))
+            # print("INSERT LOG失敗 : " + str(I))
 
         logging.info("---DELETE LOCAL FILES---")
 

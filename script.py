@@ -16,6 +16,7 @@ logfun.set_logging('/home/cim/log/AVICSVUPLOAD')
 logging.debug('----------------------------------------------------------')
 logging.info('Start at - ' + datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 
+sys.path.append('/home/cim/MAP/AVICSVUPLOAD')
 import TOPCON as TPC
 import CAMTEK as CMK
 import pandas as pd
@@ -29,13 +30,17 @@ LEFT JOIN
 ON A.EQUIP_ID=B.eqpid
 '''
 
+now = datetime.datetime.now()
+now = now.strftime('%Y%m%d%H%M%S')
+now = int(now)
+
 df = pd.read_sql(sql,con_cim)
 
 logging.info('-----Topcon---------')
 
 df_ = df[df["EQUIP_TYPE"] == "Topcon"]
 
-#df_ = df[df["EQUIP_ID"] == "AVI-20"]
+df_ = df[df["EQUIP_ID"] == "AVI-15"]
 
 df_.reset_index(inplace=True,drop=True)
 
@@ -61,6 +66,7 @@ if(len(df_)>0):
         TOPCON.SavePathLv4 = EQUIP_ID[i]
         TOPCON.SFTPip = '10.21.150.42'
         TOPCON.LastModify = lastdatetime[i]
+        TOPCON.UPDATEEndDay = 20240416000000
 
         UPDATELastModify = TOPCON.DLLogic()
 
@@ -71,7 +77,6 @@ if(len(df_)>0):
 
 logging.info('End at - ' + datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 logging.debug('---------------------------------------------------------')
-
 
 logging.info('-----Camtek---------')
 
